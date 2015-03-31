@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+</head>
+
+
+<body ng-app>
+  <div ng-controller="PostsCtrl as test">
+      <input ng-model="test.search"/>
+      <div ng-if="test.isLoading">{{test.loadingText}}</div>
+    <ul ng-repeat="rate in test.posts.query.results.rate | filter:test.search">
+      <li>{{rate.id}} - {{rate.Rate | number:2}}</li>
+    </ul>
+  </div>
+
+function PostsCtrl($http){
+var scope=this;
+scope.isLoading=true;
+    scope.loadingText="Loading!!!";
+  $http.get('http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%27audsgd%27,%20%27audusd%27,%20%27usdsgd%27,%20%27usdaud%27,%27audidr%27,%20%27sgdidr%27,%20%27usdidr%27)&env=store://datatables.org/alltableswithkeys&format=json').
+    success(function(data, status, headers, config) {
+      scope.posts = data;
+        scope.isLoading = false;
+    }).
+    error(function(data, status, headers, config) {
+       scope.loadingText="Error";
+    });
+};
+</script>
+</body>
+</html>
