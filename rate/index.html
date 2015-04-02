@@ -29,20 +29,21 @@ var app = angular.module('myApp', []);
 
 app.controller('PostsCtrl', function($scope,$http) {
 	var scope = $scope;
+	scope.isLoading = true;
 	scope.getDatetime = new Date;
-    scope.loadingText="Loading!!!";
+    scope.loadingText="Loading...";
   $http.get('http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%27audsgd%27,%20%27audusd%27,%20%27usdsgd%27,%20%27usdaud%27,%27audidr%27,%20%27sgdidr%27,%20%27usdidr%27)&env=store://datatables.org/alltableswithkeys&format=json').
     success(function(data, status, headers, config) {	
       scope.posts = data;
 	  scope.getDatetime = new Date;
-        scope.isLoading = false;
+      scope.isLoading = false;
     }).
     error(function(data, status, headers, config) {
        scope.loadingText="Error";
     });
 	
 	scope.getDatetime = function() {
-		return (new Date).toLocaleFormat("%A, %B %e, %Y");
+		return (new Date);
 	};
 });
 
