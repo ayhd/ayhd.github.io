@@ -63,7 +63,7 @@ h6 {
 }
 
 .btn-lg{	
-	max-width:150px;
+	min-width:150px;
 }
 
 
